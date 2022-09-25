@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let arr = [8, 5, 3, 50, 43, 5, 2, 2, 8]
+
+    console.log( Array.from (new Set(arr)));
+    console.log([...new Set(arr)]);
+
+    let unique=(arr)=>{
+        let brr=[];
+        for( let i=0;i<arr.length;i++){
+            if(brr.indexOf(arr[i])==-1){
+                brr.push(arr[i])
+
+            }
+        }
+        return brr
+
+    }
+    console.log(unique(arr));
+
+    let unique2=(arr)=>{
+        arr=arr.sort((a,b)=>a-b)
+        let brr2=[]
+        for( let i=0;i<arr.length;i++){
+            if(arr[i]!==arr[i-1]){
+                brr2.push(arr[i])
+
+            }
+        }
+        return brr2;
+    }
+    console.log(unique2(arr));
+</script>
+</html>

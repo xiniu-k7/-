@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            text-decoration: none;
+            list-style: none;
+            box-sizing: border-box;
+        }
+        .container{
+            width: 800px;
+            height: 400px;
+            /* border: 2px solid #999; */
+            overflow: hidden;
+            position: relative;
+        }
+        .banner{
+            width: 4800px;
+            height: 400px;
+        }
+        .banner img{
+            width: 800px;
+            height: 400px;
+            float: left;
+        }
+        .prev{
+            position: absolute;
+            width: 40px;
+            height: 30px;
+            background-color: rgb(177, 177, 177,0.39);
+            line-height: 30px;
+            text-align: center;
+            color: aliceblue;
+            z-index: 10;
+            left: 0;
+            top: 45%;
+            cursor: pointer;
+        }
+        .next{
+            position: absolute;
+            width: 40px;
+            height: 30px;
+            background-color: rgb(177, 177, 177,0.39);
+            line-height: 30px;
+            text-align: center;
+            color: aliceblue;
+            z-index: 10;
+            right: 0;
+            top: 45%;
+            cursor: pointer;
+        }
+        .icolist li{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: grey;
+            text-align: center;
+            line-height: 30px;
+            color: aliceblue;
+            float: left;
+            cursor: pointer;
+        }
+        .icolist{
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul class="banner">
+            <li><img src="./img/1.jpg" alt=""></li>
+            <li><img src="./img/2.jpg" alt=""></li>
+            <li><img src="./img/3.jpg" alt=""></li>
+            <li><img src="./img/4.jpg" alt=""></li>
+            <li><img src="./img/5.jpg" alt=""></li>
+            <li><img src="./img/1.jpg" alt=""></li>
+        </ul>
+        <div class="prev">///</div>
+        <div class="next">\\\</div>
+        <ul class="icolist">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+    </div>
+    <script>
+        var banner=document.querySelector('.banner')
+        var prev=document.querySelector('.prev')
+        var next=document.querySelector('.next')
+        var icos=document.querySelector('.icolist').getElementsByTagName('li')
+        var icolist=document.querySelector('.icolist')
+
+        var left=0;
+        var timer;
+        run()
+        function run(){
+            if(left<=-4000){
+                left=0
+            }
+            banner.style.marginLeft=left+'px'
+            var m=Math.floor(-left/800);
+            let n=(left % 800==0)? 1200:10;
+            timer=setTimeout(run,n);
+            left-=10;
+            icochange(m)
+        }
+        function imgchange(n){
+            let lt=-(n*800);
+            banner.style.marginLeft=lt+'px';
+            left=lt;
+        }
+
+        prev.onclick=function(){
+            let prego=Math.floor(-left/800)-1;
+            if(prego==-1){
+                prego=4;
+            }
+            imgchange(prego);
+        }
+        next.onclick=function(){
+            let nextgo=Math.floor(-left/800)+1;
+            if(nextgo==5){
+                nextgo=0;
+            }
+            imgchange(nextgo)
+        }
+        function icochange(m){
+            for (let i=0;i<icos.length;i++){
+                icos[i].style.backgroundColor='';
+            }
+            if(m<icos.length){
+                icos[m].style.backgroundColor='orange';
+            }
+        }
+        // icos.forEach(function(ico,i) {
+        //     ico.onclick=function(){
+        //         for (let i=0;i<icos.length;i++){
+        //         icos[i].style.backgroundColor='';
+        //     }
+        //         ico.style.backgroundColor='orange';
+        //     }
+        // });
+        icolist.onclick=function(){
+            var tg=event.target;
+            let ico=tg.innerHTML-1;
+            imgchange(ico);
+            icochange(ico);
+        }
+        // prev.onclick=function(){
+        //     if((Math.floor(left/800))==0){
+        //         left=-4000
+        //     }
+        //     // clearTimeout(timer)
+        //     banner.style.marginLeft=(Math.floor(left/800)+1)*800+'px'
+        //     left=(Math.floor(left/800)+1)*800
+            
+        // }
+        // next.onclick=function(){
+        //     if((Math.ceil(left/800))==5){
+        //         left=0
+        //     }
+        //     // clearTimeout(timer)
+        //     banner.style.marginLeft=(Math.ceil(left/800)-1)*800+'px'
+        //     left=(Math.ceil(left/800)-1)*800
+            
+        // }
+        banner.onmouseover=function(){
+            clearTimeout(timer);
+        }
+        banner.onmouseout=function(){
+            run()
+        }
+
+    </script>
+</body>
+</html>
